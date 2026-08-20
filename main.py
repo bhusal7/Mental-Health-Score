@@ -13,8 +13,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"]
-    allow_methods=["*"]
+    allow_origins=["*"],
+    allow_methods=["*"],
     allow_headers=["*"]
 )
 
@@ -59,7 +59,10 @@ def predict(data: StudentData):
     }])
     
     try:
+        
         prediction = model.predict(input_row)[0]
         return PredictionResponse(predicted_mental_health_score=round(float(prediction), 2))
+    
     except Exception as e:
+        
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
